@@ -19,13 +19,12 @@ jobs:
       with:
         node-version: '20'
 
-    # This handles the nested folder structure by looking specifically inside the sub-repo
     - name: Install Backend
       run: |
-        cd "Telemetry-Monitoring-Dashboard/server"
+        cd server
         npm install
 
     - name: Install Frontend
       run: |
-        cd "Telemetry-Monitoring-Dashboard/client"
+        cd client
         npm install
