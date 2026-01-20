@@ -19,12 +19,15 @@ jobs:
       with:
         node-version: '20'
 
+    # The Fix: Use find to locate the folders automatically
     - name: Install & Verify Backend
       run: |
-        cd server
+        BACKEND_DIR=$(find . -name "server" -type d -not -path "*/node_modules/*" | head -n 1)
+        cd $BACKEND_DIR
         npm install
         
     - name: Install & Verify Frontend
       run: |
-        cd client
+        FRONTEND_DIR=$(find . -name "client" -type d -not -path "*/node_modules/*" | head -n 1)
+        cd $FRONTEND_DIR
         npm install
