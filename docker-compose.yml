@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: ./server
+    ports:
+      - "5001:5001"
+    networks:
+      - telemetry-net
+
+  frontend:
+    build: ./client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - telemetry-net
+
+networks:
+  telemetry-net:
+    driver: bridge

@@ -1,5 +1,5 @@
 # Nexus Telemetry Monitoring Dashboard 🛰️
-
+![Build Status](https://github.com/nahorfelix/Telemetry-Monitoring-Dashboard/actions/workflows/ci.yml/badge.svg)
 A full-stack system designed to monitor real-time asset health and telemetry data. This project demonstrates the flow of "raw data" from a simulated IoT backend to a high-fidelity React dashboard.
 
 ## 🚀 Key Features
