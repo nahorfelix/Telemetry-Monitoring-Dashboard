@@ -20,11 +20,13 @@ jobs:
         node-version: '20'
 
     - name: Install Backend
+      # We are already in the root, so we just go into server
       run: |
         cd server
         npm install
 
     - name: Install Frontend
+      # We are already in the root, so we just go into client
       run: |
         cd client
         npm install
