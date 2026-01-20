@@ -19,15 +19,13 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Install All Dependencies
+    - name: Auto-Detect and Install All Modules
       run: |
-        # 1. Find and Install Backend
-        SERVER_DIR=$(find . -name "server" -type d -not -path "*/node_modules/*" | head -n 1)
-        echo "Found Backend at: $SERVER_DIR"
-        cd "$SERVER_DIR" && npm install
-        
-        # 2. Go back to start and find Frontend
-        cd ${{ github.workspace }}
-        CLIENT_DIR=$(find . -name "client" -type d -not -path "*/node_modules/*" | head -n 1)
-        echo "Found Frontend at: $CLIENT_DIR"
-        cd "$CLIENT_DIR" && npm install
+        # This finds every folder with a package.json and runs npm install
+        # It handles nested folders perfectly
+        for dir in $(find . -name "package.json" -not -path "*/node_modules/*" -exec dirname {} \;)
+        do
+          echo "📦 Installing dependencies in: $dir"
+          cd "$GITHUB_WORKSPACE/$dir"
+          npm install
+        done
