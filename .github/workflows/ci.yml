@@ -3,10 +3,13 @@ name: Telemetry Dashboard CI
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   verify-build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
@@ -18,14 +21,13 @@ jobs:
 
     - name: Install All Dependencies
       run: |
-        # This finds the folders wherever they are hidden
-        export SERVER_DIR=$(find . -name "server" -type d -not -path "*/node_modules/*" | head -n 1)
-        export CLIENT_DIR=$(find . -name "client" -type d -not -path "*/node_modules/*" | head -n 1)
-        
+        # 1. Find and Install Backend
+        SERVER_DIR=$(find . -name "server" -type d -not -path "*/node_modules/*" | head -n 1)
         echo "Found Backend at: $SERVER_DIR"
         cd "$SERVER_DIR" && npm install
         
-        cd "$GITHUB_WORKSPACE"
-        
+        # 2. Go back to start and find Frontend
+        cd ${{ github.workspace }}
+        CLIENT_DIR=$(find . -name "client" -type d -not -path "*/node_modules/*" | head -n 1)
         echo "Found Frontend at: $CLIENT_DIR"
         cd "$CLIENT_DIR" && npm install
