@@ -19,18 +19,13 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Install Backend Dependencies
+    # This handles the nested folder structure by looking specifically inside the sub-repo
+    - name: Install Backend
       run: |
-        # Find the directory containing server package.json and install
-        SERVER_PATH=$(find . -name "package.json" -path "*/server/*" -not -path "*/node_modules/*" -exec dirname {} \;)
-        echo "Found backend at: $SERVER_PATH"
-        cd "$SERVER_PATH"
+        cd "Telemetry-Monitoring-Dashboard/server"
         npm install
 
-    - name: Install Frontend Dependencies
+    - name: Install Frontend
       run: |
-        # Find the directory containing client package.json and install
-        CLIENT_PATH=$(find . -name "package.json" -path "*/client/*" -not -path "*/node_modules/*" -exec dirname {} \;)
-        echo "Found frontend at: $CLIENT_PATH"
-        cd "$CLIENT_PATH"
+        cd "Telemetry-Monitoring-Dashboard/client"
         npm install
